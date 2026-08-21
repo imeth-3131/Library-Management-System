@@ -1,0 +1,111 @@
+@model Library_Management_System.Models.Borrowing
+
+@{
+    ViewData["Title"] = "Borrow Book";
+}
+
+<h1>Borrow Book</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="MemberID" class="control-label">
+                    Member
+                </label>
+
+                <select asp-for="MemberID"
+                        class="form-control"
+                        asp-items="ViewBag.MemberID">
+                    <option value="">-- Select Member --</option>
+                </select>
+
+                <span asp-validation-for="MemberID"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="BookID" class="control-label">
+                    Book
+                </label>
+
+                <select asp-for="BookID"
+                        class="form-control"
+                        asp-items="ViewBag.BookID">
+                    <option value="">-- Select Available Book --</option>
+                </select>
+
+                <span asp-validation-for="BookID"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="BorrowDate" class="control-label">
+                    Borrow Date
+                </label>
+
+                <input asp-for="BorrowDate"
+                       type="date"
+                       class="form-control" />
+
+                <span asp-validation-for="BorrowDate"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="DueDate" class="control-label">
+                    Due Date
+                </label>
+
+                <input asp-for="DueDate"
+                       type="date"
+                       class="form-control" />
+
+                <span asp-validation-for="DueDate"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ReturnDate" class="control-label">
+                    Return Date
+                </label>
+
+                <input asp-for="ReturnDate"
+                       type="date"
+                       class="form-control" />
+
+                <small class="text-muted">
+                    Leave this empty until the book is returned.
+                </small>
+
+                <span asp-validation-for="ReturnDate"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit"
+                       value="Borrow Book"
+                       class="btn btn-primary" />
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Back to List
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

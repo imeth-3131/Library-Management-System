@@ -1,0 +1,205 @@
+@model IEnumerable<Library_Management_System.Models.Borrowing>
+
+@{
+    ViewData["Title"] = "Borrowings";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>Borrowings</h1>
+            <p class="text-muted mb-0">
+                Manage borrowed and returned books
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Borrow Book
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <h4>No borrowing records</h4>
+                    <p class="text-muted">
+                        There are currently no books borrowed.
+                    </p>
+
+                    <a asp-action="Create"
+                       class="btn btn-primary">
+                        Borrow a Book
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Member</th>
+                                <th>Book</th>
+                                <th>Borrow Date</th>
+                                <th>Due Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                bool isReturned = item.ReturnDate != null;
+
+                                bool isOverdue =
+                                !isReturned &&
+                                item.DueDate.Date < DateTime.Today;
+
+                                <tr>
+
+                                    <!-- Member -->
+                                    <td>
+                                        @if (item.Member != null)
+                                        {
+                                            <strong>
+                                                @item.Member.FullName
+                                            </strong>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                Unknown Member
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <!-- Book -->
+                                    <td>
+                                        @if (item.Book != null)
+                                        {
+                                            <strong>
+                                                @item.Book.Title
+                                            </strong>
+
+                                            <br />
+
+                                            <small class="text-muted">
+                                                ISBN: @item.Book.ISBN
+                                            </small>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                Unknown Book
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <!-- Borrow Date -->
+                                    <td>
+                                        @item.BorrowDate.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                    <!-- Due Date -->
+                                    <td>
+                                        @item.DueDate.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                    <!-- Return Date -->
+                                    <td>
+                                        @if (item.ReturnDate != null)
+                                        {
+                                            @item.ReturnDate.Value.ToString("dd/MM/yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">
+                                                Not returned
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <!-- Status -->
+                                    <td>
+
+                                        @if (isReturned)
+                                        {
+                                            <span class="badge bg-success">
+                                                Returned
+                                            </span>
+                                        }
+                                        else if (isOverdue)
+                                        {
+                                            <span class="badge bg-danger">
+                                                Overdue
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning text-dark">
+                                                Borrowed
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td>
+
+                                        @if (!isReturned)
+                                        {
+                                            <form asp-action="Return"
+                                                  asp-route-id="@item.BorrowID"
+                                                  method="post"
+                                                  style="display:inline;">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="btn btn-success btn-sm"
+                                                        onclick="return confirm('Are you sure you want to return this book?');">
+                                                    Return
+                                                </button>
+
+                                            </form>
+                                        }
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.BorrowID"
+                                           class="btn btn-info btn-sm text-white">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.BorrowID"
+                                           class="btn btn-danger btn-sm">
+                                            Delete
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
