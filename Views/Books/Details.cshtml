@@ -1,66 +1,131 @@
 @model Library_Management_System.Models.Book
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Book Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
 
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ISBN)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ISBN)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PublishedYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PublishedYear)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AvailableQuantity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AvailableQuantity)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Book Details</h2>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    Book ID
+                </div>
+
+                <div class="col-sm-8">
+                    @Model.BookID
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    ISBN
+                </div>
+
+                <div class="col-sm-8">
+                    @Model.ISBN
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    Title
+                </div>
+
+                <div class="col-sm-8">
+                    @Model.Title
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    Author
+                </div>
+
+                <div class="col-sm-8">
+                    @Model.Author
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    Category
+                </div>
+
+                <div class="col-sm-8">
+                    @Model.Category
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    Published Year
+                </div>
+
+                <div class="col-sm-8">
+                    @Model.PublishedYear
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    Total Quantity
+                </div>
+
+                <div class="col-sm-8">
+                    @Model.Quantity
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">
+                    Available Quantity
+                </div>
+
+                <div class="col-sm-8">
+
+                    @if (Model.AvailableQuantity > 0)
+                    {
+                        <span class="badge bg-success fs-6">
+                            @Model.AvailableQuantity Available
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger fs-6">
+                            Not Available
+                        </span>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.BookID"
+               class="btn btn-primary">
+                Edit Book
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Back to Books
+            </a>
+
+        </div>
+
+    </div>
+
 </div>

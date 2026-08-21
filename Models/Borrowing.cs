@@ -21,8 +21,9 @@ namespace Library_Management_System.Models
 
         public DateTime? ReturnDate { get; set; }
 
-        public Book Book { get; set; }
+        // Navigation properties
+        public Book? Book { get; set; }
 
-        public Member Member { get; set; }
+        public Member? Member { get; set; }
     }
 }
